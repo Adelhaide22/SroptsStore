@@ -1,0 +1,46 @@
+﻿@model ProductsListViewModel
+
+@using (Html.BeginForm("SortedList", "Product", FormMethod.Post))
+{
+    <div class="row justify-content-start m-1 p-1">
+        <label class="p-1">Sort by price</label>
+        <button type="submit" name="order" value="asc"
+                class="btn btn-success btn-sm pull-right m-1">
+            Asc
+        </button>
+        <button type="submit" name="order" value="desc"
+                class="btn btn-success btn-sm pull-right m-1">
+            Desc
+        </button>
+    </div>
+}
+
+
+@using (Html.BeginForm("ListInRange", "Product", FormMethod.Post))
+{
+    <div class="row justify-content-start m-1 p-1">
+        <label class="p-1">Lower price bound: </label>
+        <input type="text" name ="lowerBound" value="@ViewBag.LowerBound" class="m-1"/>
+    </div>
+    <div class="row justify-content-start m-1 p-1">
+        <label class="p-1">Upper price bound: </label>
+        <input type="text" name="upperBound" value="@ViewBag.UpperBound" class="m-1"/>
+    </div>
+    <div class="row justify-content-start m-1 p-1">
+        <button type="submit" class="btn btn-success btn-sm pull-right m-1">
+            Show
+        </button>
+    </div>
+}
+
+
+@foreach (var p in Model.Products)
+{
+    @Html.Partial("ProductSummary", p)
+}
+
+<div page-model="@Model.PagingInfo" page-action="List" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-secondary"
+     page-class-selected="btn-primary" page-url-category="@Model.CurrentCategory"
+     class="btn-group pull-right m-1">
+</div>
